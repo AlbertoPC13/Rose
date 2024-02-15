@@ -19,7 +19,7 @@ distro==1.9.0
 ffmpeg==1.4
 filelock==3.9.0
 Flask==3.0.1
-fonttools==4.39.4
+fonttools==4.43.0
 fsspec==2023.4.0
 gpiozero==1.6.2
 h11==0.14.0
