@@ -8,6 +8,8 @@ import os
 
 class NLP_nltk_openai(NLP):
     def __init__(self):
+        nltk.download('cess_esp')
+        nltk.download('punkt')
         print("Se ha creado una instancia de NLP_nltk_openai")
 
     def tokenize_sentences(self, text_to_analyze):
