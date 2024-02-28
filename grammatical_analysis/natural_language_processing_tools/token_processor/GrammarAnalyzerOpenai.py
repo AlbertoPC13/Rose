@@ -3,7 +3,7 @@ from openai import OpenAI
 import os
 
 
-def tagged_sentences_to_string(tagged_sentences):
+def tagged_sentences_to_string(tagged_sentences: list) -> str:
     tagged_sentences_strings = []
     for tagged_sentence in tagged_sentences:
         sentence_string = " ".join([f"{word}/{tag}" for word, tag in tagged_sentence])
@@ -16,7 +16,7 @@ class GrammarAnalyzerOpenai(GrammarAnalyzer):
         pass
 
     def analyze_grammar(self, pos_tagged_sentences: list) -> str:
-        prompt = tagged_sentences_to_string(pos_tagged_sentences)
+        text_to_analyze = tagged_sentences_to_string(pos_tagged_sentences)
         openai_key = os.environ.get('OPENAI_API_KEY')
         client = OpenAI(api_key=openai_key)
         completion = client.chat.completions.create(
@@ -28,7 +28,7 @@ class GrammarAnalyzerOpenai(GrammarAnalyzer):
                 },
                 {
                     "role": "user",
-                    "content": prompt,
+                    "content": text_to_analyze,
                 },
             ],
         )
