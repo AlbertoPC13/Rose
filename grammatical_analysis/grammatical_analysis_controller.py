@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, Response
 from .grammatical_analysis_service import GrammaticalAnalysisService
 grammatical_analysis_api = Blueprint('grammatical_analysis_api', __name__)
 
@@ -7,7 +7,7 @@ def index():
    return jsonify("Hello World"), 200
 
 @grammatical_analysis_api.route('/<text>', methods=['GET'])
-def analyze_grammar(text):
+def analyze_grammar(text: str) -> tuple[Response, int]:
     service = GrammaticalAnalysisService()
     result = service.analyze_text_grammatically(text)
     return jsonify(result), 200

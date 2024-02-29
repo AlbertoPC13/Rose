@@ -1,9 +1,11 @@
+from nltk import UnigramTagger
+
 from .POSTagger import POSTagger
 import nltk
 from nltk.corpus import cess_esp
 
 
-def get_tagger():
+def get_tagger() -> UnigramTagger:
     patterns = [
         (r".*é$", "VBD"),  # past verb
         (r".*ó$", "VBD"),  # past verb
