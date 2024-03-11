@@ -18,9 +18,7 @@ class GrammarAnalyzerOpenai(GrammarAnalyzer):
 
     def analyze_grammar(self, pos_tagged_sentences: list) -> str:
         text_to_analyze = tagged_sentences_to_string(pos_tagged_sentences)
-        openai_key = os.environ.get('OPENAI_API_KEY')
-        client = OpenAI(api_key=openai_key)
-        completion = client.chat.completions.create(
+        completion = self.client.chat.completions.create(
             model="gpt-4",
             messages=[
                 {
