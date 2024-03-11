@@ -1,5 +1,4 @@
 from flask import Blueprint, jsonify, Response
-
 from .grammatical_analysis_service import GrammaticalAnalysisService
 from .natural_language_processing_tools.text_preprocessing.tokenizer.Tokenizer_nltk import TokenizerNltk
 from .natural_language_processing_tools.text_preprocessing.pos_tagger.POS_tagger_nltk import POSTaggerNltk
