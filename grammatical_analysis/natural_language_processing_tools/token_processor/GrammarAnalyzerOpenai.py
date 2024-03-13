@@ -3,14 +3,6 @@ from openai import OpenAI
 import os
 
 
-def tagged_sentences_to_string(tagged_sentences: list) -> str:
-    tagged_sentences_strings = []
-    for tagged_sentence in tagged_sentences:
-        sentence_string = " ".join([f"{word}/{tag}" for word, tag in tagged_sentence])
-        tagged_sentences_strings.append(sentence_string)
-    return "\n".join(tagged_sentences_strings)
-
-
 class GrammarAnalyzerOpenai(GrammarAnalyzer):
     def __init__(self):
         openai_key = os.environ.get('OPENAI_API_KEY')
