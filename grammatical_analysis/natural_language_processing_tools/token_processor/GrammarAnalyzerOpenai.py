@@ -3,23 +3,14 @@ from openai import OpenAI
 import os
 
 
-def tagged_sentences_to_string(tagged_sentences):
-    tagged_sentences_strings = []
-    for tagged_sentence in tagged_sentences:
-        sentence_string = " ".join([f"{word}/{tag}" for word, tag in tagged_sentence])
-        tagged_sentences_strings.append(sentence_string)
-    return "\n".join(tagged_sentences_strings)
-
-
 class GrammarAnalyzerOpenai(GrammarAnalyzer):
     def __init__(self):
-        pass
+        openai_key = os.environ.get('OPENAI_API_KEY')
+        self.client = OpenAI(api_key=openai_key)
 
     def analyze_grammar(self, pos_tagged_sentences: list) -> str:
-        prompt = tagged_sentences_to_string(pos_tagged_sentences)
-        openai_key = os.environ.get('OPENAI_API_KEY')
-        client = OpenAI(api_key=openai_key)
-        completion = client.chat.completions.create(
+        text_to_analyze = tagged_sentences_to_string(pos_tagged_sentences)
+        completion = self.client.chat.completions.create(
             model="gpt-4",
             messages=[
                 {
@@ -28,7 +19,7 @@ class GrammarAnalyzerOpenai(GrammarAnalyzer):
                 },
                 {
                     "role": "user",
-                    "content": prompt,
+                    "content": text_to_analyze,
                 },
             ],
         )
@@ -36,3 +27,11 @@ class GrammarAnalyzerOpenai(GrammarAnalyzer):
         response = completion.choices[0].message.content
 
         return response
+
+    @staticmethod
+    def tagged_sentences_to_string(tagged_sentences):
+        tagged_sentences_strings = []
+        for tagged_sentence in tagged_sentences:
+            sentence_string = " ".join([f"{word}/{tag}" for word, tag in tagged_sentence])
+            tagged_sentences_strings.append(sentence_string)
+        return "\n".join(tagged_sentences_strings)
