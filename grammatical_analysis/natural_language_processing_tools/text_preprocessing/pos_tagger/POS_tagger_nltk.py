@@ -63,14 +63,14 @@ class POSTaggerNltk(POSTagger):
             (r".*as$", "NOUN"),  # noun feminine plural
         ]
 
-        default_tagger = "NOUN"
-        default = nltk.DefaultTagger(default_tagger)
+        default_tag = "NOUN"
+        default_tagger = nltk.DefaultTagger(default_tag)
 
         sentences_tagged = []
         for sentence in cess_esp.tagged_sents(tagset='universal_tagset'):
             sentences_tagged.append([(word, tag) for (word, tag) in sentence])
 
-        regex_tagger = nltk.RegexpTagger(patterns, backoff=default)
+        regex_tagger = nltk.RegexpTagger(patterns, backoff=default_tagger)
         unigram_tagger = nltk.UnigramTagger(sentences_tagged, backoff=regex_tagger)
 
         return unigram_tagger
