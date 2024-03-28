@@ -1,4 +1,4 @@
-from .Tokenizer import Tokenizer
+from Tokenizer import Tokenizer
 import nltk
 from nltk import sent_tokenize
 
