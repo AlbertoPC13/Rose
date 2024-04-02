@@ -3,7 +3,7 @@ from .grammatical_analysis_service import GrammaticalAnalysisService
 from .natural_language_processing_tools.text_preprocessing.pos_tagger.tagger_file.TaggerFile import TaggerFile
 from .natural_language_processing_tools.text_preprocessing.tokenizer.sentence.SentenceTokenizerNltk import SentenceTokenizerNltk
 from .natural_language_processing_tools.text_preprocessing.tokenizer.word.WordTokenizerNltk import WordTokenizerNltk
-from .natural_language_processing_tools.text_preprocessing.pos_tagger.POS_tagger_nltk import POSTaggerNltk
+from .natural_language_processing_tools.text_preprocessing.pos_tagger.POSTaggerNltk import POSTaggerNltk
 from .natural_language_processing_tools.token_processor.GrammarAnalyzerOpenai import GrammarAnalyzerOpenai
 from http import HTTPStatus
 
