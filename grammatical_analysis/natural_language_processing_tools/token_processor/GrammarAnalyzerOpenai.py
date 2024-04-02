@@ -11,7 +11,7 @@ class GrammarAnalyzerOpenai(GrammarAnalyzer):
               as prompt_file):
             self.prompt_json = eval(prompt_file.read())
 
-    def analyze_grammar(self, pos_tagged_sentences: list) -> str:
+    def analyze_grammar(self, pos_tagged_sentences: list[list[tuple[str, str]]]) -> str:
         text_to_analyze = self.tagged_sentences_to_string(pos_tagged_sentences)
         completion = self.client.chat.completions.create(
             model="gpt-4",
@@ -33,7 +33,7 @@ class GrammarAnalyzerOpenai(GrammarAnalyzer):
         return response
 
     @staticmethod
-    def tagged_sentences_to_string(tagged_sentences):
+    def tagged_sentences_to_string(tagged_sentences: list[list[tuple[str, str]]]) -> str:
         tagged_sentences_strings = []
         for tagged_sentence in tagged_sentences:
             sentence_string = " ".join([f"{word}/{tag}" for word, tag in tagged_sentence])
