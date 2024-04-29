@@ -1,5 +1,6 @@
 from grammatical_analysis.natural_language_processing_tools.token_processor.GrammarAnalyzer import GrammarAnalyzer
 from openai import OpenAI
+import json
 import os
 
 
@@ -25,17 +26,19 @@ class GrammarAnalyzerOpenai(GrammarAnalyzer):
                     "role": "user",
                     "content": text_to_analyze,
                 }
-            ]
+            ],
+            temperature=0.0,
         )
 
         response = completion.choices[0].message.content
+        json_response = json.loads(response)
 
-        return response
+        return json_response
 
     @staticmethod
     def tagged_sentences_to_string(tagged_sentences: list[list[tuple[str, str]]]) -> str:
         tagged_sentences_strings = []
         for tagged_sentence in tagged_sentences:
-            sentence_string = " ".join([f"{word}/{tag}" for word, tag in tagged_sentence])
+            sentence_string = "".join([f"{word}/{tag} " if tag is not "PUNCT" else f"{word}/{tag}" for word, tag in tagged_sentence])
             tagged_sentences_strings.append(sentence_string)
         return "\n".join(tagged_sentences_strings)
