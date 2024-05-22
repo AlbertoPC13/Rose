@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+
 from grammatical_analysis.natural_language_processing_tools.token_processor.GrammarAnalyzer import GrammarAnalyzer
 from openai import OpenAI
 import json
@@ -31,9 +33,18 @@ class GrammarAnalyzerOpenai(GrammarAnalyzer):
         )
 
         response = completion.choices[0].message.content
+
+        if not self.is_json(response):
+            response = "[]"
+
         json_response = json.loads(response)
 
         return json_response
+
+    @staticmethod
+    def is_json(json_str: str) -> bool:
+        return (json_str.strip().startswith('{') and json_str.strip().endswith('}')) or \
+            (json_str.strip().startswith('[') and json_str.strip().endswith(']'))
 
     @staticmethod
     def tagged_sentences_to_string(tagged_sentences: list[list[tuple[str, str]]]) -> str:
